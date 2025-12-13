@@ -6,5 +6,6 @@ import VerifyOtpSavePassword from './VerifyOtpSavePassword';
 import Dashboard from './Dashboard';
 import HomeDashboard from './HomeDashboard';
 import Intro from './Intro';
+import SettingDashboard from './SettingDashboard';
 
-export { Home, About, Login, Register, VerifyOtpSavePassword, Dashboard, HomeDashboard, Intro };
+export { Home, About, Login, Register, VerifyOtpSavePassword, Dashboard, HomeDashboard, Intro, SettingDashboard };

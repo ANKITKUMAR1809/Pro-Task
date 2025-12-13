@@ -8,7 +8,8 @@ import {
   VerifyOtpSavePassword,
   Dashboard,
   HomeDashboard,
-  Intro
+  Intro,
+  SettingDashboard
 } from "./pages/index";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // <-- REQUIRED
@@ -31,6 +32,7 @@ const App = () => {
           </Route>
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
             <Route index element={<HomeDashboard />} />
+            <Route path="setting" element={<SettingDashboard/>} />
           </Route>
 
           <Route path="*" element={<div>404 Not Found</div>} />

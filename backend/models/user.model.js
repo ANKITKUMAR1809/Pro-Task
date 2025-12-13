@@ -1,10 +1,9 @@
-const mongoose = require ("mongoose");
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: false,
       trim: true,
     },
 
@@ -17,48 +16,48 @@ const userSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: false, // optional because Google/Facebook users may not have a password
     },
 
-    // Google OAuth
-    googleId: {
-      type: String,
-      required: false,
-    },
+    googleId: String,
+    facebookId: String,
 
-    // Facebook OAuth
-    facebookId: {
-      type: String,
-      required: false,
-    },
-
-    // User Tasks Data
     tasks: [
       {
         title: String,
-        completed: Boolean,
-        points: Number,
-        createdAt: Date,
+
+        target: {
+          type: String,
+          enum: ["1D", "2D", "3D", "1W", "2W"],
+          required: true,
+        },
+
+        completed: {
+          type: Boolean,
+          default: false,
+        },
+
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
       },
     ],
 
-    // Daily strike (GitHub-like streak)
     strikeCount: {
       type: Number,
       default: 0,
     },
-    lastStrikeDate: {
-      type: Date,
-      required: false,
-    },
 
-    // Automatic reminders every few hours
+    lastStrikeDate: Date,
+
     remindersEnabled: {
       type: Boolean,
       default: true,
     },
-
-    // AI-generated study plan history
+    reminderIn: {
+      type: String,
+      enum: ["2H", "4H", "6H"],
+    },
     aiPlans: [
       {
         content: String,
@@ -71,4 +70,5 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-module.exports= mongoose.model("User", userSchema);
+
+module.exports = mongoose.model("User", userSchema);

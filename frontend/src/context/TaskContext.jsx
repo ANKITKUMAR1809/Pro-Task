@@ -11,7 +11,6 @@ export const TaskProvider = ({ children }) => {
 
   const [completedTasks, setCompletedTasks] = useState([]);
   const [incompleteTasks, setIncompleteTasks] = useState([]);
-  const [strikeCount, setStrikeCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
 
@@ -29,7 +28,6 @@ export const TaskProvider = ({ children }) => {
       }
       setCompletedTasks(res.data.completedTasks);
       setIncompleteTasks(res.data.pendingTasks);
-      setStrikeCount(res.data.strikeCount);
       setLoading(false);
 
     } catch (err) {
@@ -136,7 +134,6 @@ export const TaskProvider = ({ children }) => {
       value={{
         completedTasks,
         incompleteTasks,
-        strikeCount,
         loading,
 
         // Functions

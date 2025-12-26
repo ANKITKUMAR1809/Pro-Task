@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import { successToast, infoToast, errorToast } from "../utils/toast";
@@ -7,9 +7,15 @@ import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const {setAuthData} = useAuth();
+  const { setAuthData, user, loading } = useAuth();
   const [input, setInput] = useState({ email: "", password: "" });
 
+  useEffect(()=>{
+    if(user && !loading)
+    {
+      navigate("/dashboard")
+    }
+  },[navigate])
   const handleInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -28,7 +34,7 @@ const Login = () => {
         setAuthData(data.user, data.token);
         successToast(data.message);
         setTimeout(() => {
-          navigate('/dashboard')
+          navigate("/dashboard");
         }, 2000);
       } else {
         infoToast(data.message);

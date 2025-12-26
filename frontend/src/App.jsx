@@ -9,11 +9,16 @@ import {
   Dashboard,
   HomeDashboard,
   Intro,
-  SettingDashboard
+  SettingDashboard,
+  TaskDashboard,
+  StatDashboard
 } from "./pages/index";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // <-- REQUIRED
 import PrivateRoute from "./components/PrivateRoute";
+import AddTask from "./components/AddTask";
+import StackTask from "./components/StackTask";
+import Pomedoro from "./components/Pomedoro";
 
 const App = () => {
   return (
@@ -33,6 +38,11 @@ const App = () => {
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
             <Route index element={<HomeDashboard />} />
             <Route path="setting" element={<SettingDashboard/>} />
+            <Route path="addtask" element={<AddTask/>} />
+            <Route path="see-task" element={<StackTask/>} />
+            <Route path="pomedaro" element={<Pomedoro/>} />
+            <Route path="tasks" element={<TaskDashboard/>} />
+            <Route path="stats" element={<StatDashboard/>} />
           </Route>
 
           <Route path="*" element={<div>404 Not Found</div>} />

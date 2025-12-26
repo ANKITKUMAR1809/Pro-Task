@@ -10,7 +10,7 @@ const StackTask = () => {
     if (!loading) {
       setTask(incompleteTasks);
     }
-  }, [incompleteTasks, loading]);
+  }, [incompleteTasks, loading, deleteTask, markCompleted]);
 
   return (
     <section className="max-h-screen md:h-1/2 bg-white p-4 shadow-xl m-2 rounded-xl">

@@ -260,8 +260,6 @@ exports.getAllTasks = async (req, res) => {
       totalTasks: allTasks.length,
       completedTasks: completed,
       pendingTasks: pending,
-      strikeCount: user.strikeCount,
-      tasks: allTasks,
     });
 
   } catch (error) {
@@ -272,3 +270,42 @@ exports.getAllTasks = async (req, res) => {
     });
   }
 };
+
+
+exports.getStat = async (req,res)=>{
+  try {
+    const { email } = req.body;
+
+    // Check required field
+    if (!email) {
+      return res.json({
+        success: false,
+        message: "Email is required!",
+      });
+    }
+
+    // Find user
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User not found!",
+      });
+    }
+
+
+    return res.json({
+      success: true,
+      strikeCount: user.strikeCount,
+      lastStrikeDate: user.lastStrikeDate,
+      createdAt:user.createdAt,
+    });
+
+  } catch (error) {
+    console.error("Error in getAllTasks:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+}

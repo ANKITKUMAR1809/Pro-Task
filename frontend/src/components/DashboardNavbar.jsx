@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  FiBell,
   FiUser,
-  FiPlus,
   FiChevronDown,
-  FiMessageCircle,
   FiSettings,
   FiLogOut,
   FiGrid,
@@ -18,7 +15,7 @@ const DashboardNavbar = () => {
   const { logout } = useAuth();
 
   return (
-    <nav className="w-full backdrop-blur-md bg-white/40 border-b border-white/20 shadow-lg  z-50">
+    <nav className=" w-full backdrop-blur-md bg-white/40 border-b border-white/20 shadow-lg z-[10000]">
       <div className="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
         {/* LOGO */}
         <div className="flex items-center space-x-2">
@@ -35,16 +32,13 @@ const DashboardNavbar = () => {
 
         {/* RIGHT SIDE */}
         <div className="flex items-center space-x-6">
-          {/* AI CHAT */}
-         
-
-          {/* NOTIFICATIONS */}
-          
-
           {/* MANAGE DROPDOWN */}
           <div className="relative">
             <button
-              onClick={() => setManageOpen(!manageOpen)}
+              onClick={() => {
+                setManageOpen(!manageOpen);
+                setProfileOpen(false);
+              }}
               className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition"
             >
               <FiGrid size={20} />
@@ -53,14 +47,19 @@ const DashboardNavbar = () => {
             </button>
 
             {manageOpen && (
-              <div className="absolute right-0 mt-3 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 animate-fadeIn">
-                <Link className="block px-4 py-2 hover:bg-gray-100" to="/tasks">
+              <div className="absolute right-0 mt-3 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-[10001]">
+                <Link
+                  className="block px-4 py-2 hover:bg-gray-100"
+                  to="/dashboard/tasks"
+                >
                   Tasks
                 </Link>
-                <Link className="block px-4 py-2 hover:bg-gray-100" to="/stats">
+                <Link
+                  className="block px-4 py-2 hover:bg-gray-100"
+                  to="/dashboard/stats"
+                >
                   Stats
                 </Link>
-                
               </div>
             )}
           </div>
@@ -68,14 +67,17 @@ const DashboardNavbar = () => {
           {/* PROFILE DROPDOWN */}
           <div className="relative">
             <img
-              onClick={() => setProfileOpen(!profileOpen)}
+              onClick={() => {
+                setProfileOpen(!profileOpen);
+                setManageOpen(false);
+              }}
               src="https://i.pravatar.cc/40"
               alt="profile"
               className="w-10 h-10 rounded-full cursor-pointer border-2 border-gray-300 hover:border-blue-600 transition"
             />
 
             {profileOpen && (
-              <div className="absolute right-0 mt-3 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 animate-fadeIn">
+              <div className="absolute right-0 mt-3 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-[10001]">
                 <Link
                   className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
                   to="/dashboard/profile"

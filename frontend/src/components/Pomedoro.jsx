@@ -120,7 +120,7 @@ const Pomedoro = () => {
       </div>
 
       {/* Progress Display */}
-      <div className="relative mb-8">
+      <div className="relative mb-8 ">
         <div className="flex justify-center mb-4">
           <div className="relative w-64 h-64">
             <svg className="w-full h-full" viewBox="0 0 100 100">

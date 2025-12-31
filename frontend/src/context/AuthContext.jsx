@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   const verifyToken = async (savedToken) => {
     try {
       const res = await axios.get(
-        "http://localhost:3000/api/auth/verify-token",
+        "https://pro-task-production.up.railway.app/api/auth/verify-token",
         {
           headers: {
             Authorization: `Bearer ${savedToken}`,
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
   const postSetReminderIn = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/user/set-reminder",
+        "https://pro-task-production.up.railway.app/api/user/set-reminder",
         {
           email:user.email, reminderIn
         }
@@ -89,7 +89,7 @@ export const AuthProvider = ({ children }) => {
   const postSetReminder = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/user/reminder",
+        "https://pro-task-production.up.railway.app/api/user/reminder",
         {
           email:user.email, isReminder:reminder
         }

@@ -17,7 +17,7 @@ const AddTask = () => {
 
     try {
       const email = user.email;
-      const res = await axios.post("http://localhost:3000/api/user/add-task", {
+      const res = await axios.post("https://pro-task-production.up.railway.app/api/user/add-task", {
         email,
         task,
         target,

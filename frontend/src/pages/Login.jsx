@@ -23,7 +23,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/api/auth/login", {
+      const res = await axios.post("https://pro-task-production.up.railway.app/api/auth/login", {
         email: input.email,
         password: input.password,
       });

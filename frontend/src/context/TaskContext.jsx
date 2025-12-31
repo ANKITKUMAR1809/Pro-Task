@@ -21,7 +21,7 @@ export const TaskProvider = ({ children }) => {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:3000/api/user/get-all-tasks",
+        "https://pro-task-production.up.railway.app/api/user/get-all-tasks",
         { email: user.email }
       );
 
@@ -57,7 +57,7 @@ export const TaskProvider = ({ children }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/user/add-task",
+        "https://pro-task-production.up.railway.app/api/user/add-task",
         {
           email: user.email,
           task,
@@ -88,7 +88,7 @@ export const TaskProvider = ({ children }) => {
   const markCompleted = async (taskId) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/user/mark-complete",
+        "https://pro-task-production.up.railway.app/api/user/mark-complete",
         {
           email: user.email,
           taskId,
@@ -123,7 +123,7 @@ export const TaskProvider = ({ children }) => {
   const deleteTask = async (taskId) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/user/delete-task",
+        "https://pro-task-production.up.railway.app/api/user/delete-task",
         {
           email: user.email,
           taskId,
@@ -152,7 +152,7 @@ export const TaskProvider = ({ children }) => {
   const deleteAllTasks = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/user/delete-all-task",
+        "https://pro-task-production.up.railway.app/api/user/delete-all-task",
         { email: user.email }
       );
 

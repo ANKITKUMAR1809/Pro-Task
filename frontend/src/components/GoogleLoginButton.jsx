@@ -14,7 +14,7 @@ const GoogleLoginButton = () => {
       const token = response.credential;
       console.log("Google JWT:", token);
       // Send token to backend
-      const res = await axios.post("http://localhost:3000/api/auth/google", {
+      const res = await axios.post("https://pro-task-production.up.railway.app/api/auth/google", {
         token,
       });
 

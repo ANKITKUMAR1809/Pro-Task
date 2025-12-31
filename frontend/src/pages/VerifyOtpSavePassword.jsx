@@ -31,7 +31,7 @@ const VerifyOtpSavePassword = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/verify-otp-and-save",
+        "https://pro-task-production.up.railway.app/api/auth/verify-otp-and-save",
         {
           email,
           otp: form.otp,

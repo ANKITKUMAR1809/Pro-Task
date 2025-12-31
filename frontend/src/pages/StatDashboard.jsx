@@ -7,7 +7,7 @@ const StatDashboard = () => {
   const {user}= useAuth();
   useEffect(() => {
     axios
-      .post("http://localhost:3000/api/user/get-stat", {
+      .post("https://pro-task-production.up.railway.app/api/user/get-stat", {
         email: user.email,
       })
       .then((res) => {

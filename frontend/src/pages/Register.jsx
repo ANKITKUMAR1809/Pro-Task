@@ -12,7 +12,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:3000/api/auth/send-otp", {
+      const res = await axios.post("https://pro-task-production.up.railway.app/api/auth/send-otp", {
         email
       });
 

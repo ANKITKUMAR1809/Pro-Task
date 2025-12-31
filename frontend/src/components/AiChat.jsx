@@ -106,7 +106,7 @@ Explain how to complete them efficiently in short bullet points.`,
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gray-100 shadow-md rounded-xl">
+    <div className="h-screen md:h-full flex flex-col bg-gray-100 shadow-md rounded-xl">
       {/* CHAT AREA */}
       <div
         ref={chatRef}

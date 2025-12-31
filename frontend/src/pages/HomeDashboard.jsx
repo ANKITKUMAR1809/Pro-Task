@@ -22,12 +22,12 @@ const HomeDashboard = () => {
   return (
     <section className="w-full min-h-screen  z-10">
       {/* ================= GRID FOR LAPTOP ================= */}
-      <div className="hidden lg:grid grid-cols-12 gap-4 p-4 min-h-screen">
+      <div className="hidden lg:grid grid-cols-12 gap-4 p-4 min-h-screen max-w-7xl mx-auto">
         <div className="col-span-5">
           <AiChat />
         </div>
 
-        <div className="col-span-3 flex flex-col gap-4">
+        <div className="col-span-3 flex flex-col gap-4 min-h-screen">
           <AddTask />
           <StackTask />
         </div>

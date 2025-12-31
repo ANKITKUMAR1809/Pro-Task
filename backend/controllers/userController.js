@@ -75,14 +75,12 @@ exports.setReminder = async (req, res) => {
     }
 
     user.reminderIn = reminderIn; // must match enum
-    user.remindersEnabled = true;
 
     await user.save();
 
     return res.json({
       success: true,
       message: "Reminder updated successfully!",
-      user,
     });
   } catch (error) {
     console.error("Error in setReminder:", error);
@@ -303,6 +301,44 @@ exports.getStat = async (req,res)=>{
 
   } catch (error) {
     console.error("Error in getAllTasks:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+}
+
+exports.isReminder = async (req,res)=>{
+  try {
+    const { email, isReminder } = req.body;
+
+    // Check required field
+    if (!email) {
+      return res.json({
+        success: false,
+        message: "Email is required!",
+      });
+    }
+
+    // Find user
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User not found!",
+      });
+    }
+    
+    user.remindersEnabled=isReminder;
+
+    await user.save();
+    return res.json({
+      success: true,
+      message: "Reminder Set Successfully",
+    });
+
+  } catch (error) {
+    console.error("Error in setReminder:", error);
     return res.status(500).json({
       success: false,
       message: "Internal server error",

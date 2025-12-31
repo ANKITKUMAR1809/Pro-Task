@@ -1,13 +1,15 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const connectDB = require("./utils/database.util");
 require("dotenv").config();
-const port = 3000;
+
+const connectDB = require("./utils/database.util");
 
 const router = require("./routes/gAuth.route");
 const emailRouter = require("./routes/email.route");
 const userRouter = require("./routes/user.route");
+
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -20,7 +22,15 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.listen(port, () => {
-  connectDB();
-  console.log(`Server is running on port ${port}`);
-});
+const startServer = async () => {
+  await connectDB();
+
+  // 🔥 START CRON AFTER DB CONNECTS
+  require("./cron/taskReminder");
+
+  app.listen(port, () => {
+    console.log(`🚀 Server running on port ${port}`);
+  });
+};
+
+startServer();

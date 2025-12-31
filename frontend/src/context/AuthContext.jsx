@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { errorToast } from "../utils/toast";
 
 const AuthContext = createContext();
 
@@ -10,7 +11,10 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Validate token with backend
+  // 🔔 reminder toggle (frontend state)
+  const [reminder, setReminder] = useState(false);
+  const [reminderIn, setReminderIn] = useState("");
+
   const verifyToken = async (savedToken) => {
     try {
       const res = await axios.get(
@@ -33,10 +37,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Load user + token from localStorage on refresh
+
   useEffect(() => {
     const checkAuth = async () => {
       const savedToken = localStorage.getItem("protask-token");
+      const savedUser = localStorage.getItem("protask-user");
 
       if (!savedToken) {
         setLoading(false);
@@ -45,16 +50,76 @@ export const AuthProvider = ({ children }) => {
 
       setToken(savedToken);
 
-      // IMPORTANT: Wait for token verification
-      await verifyToken(savedToken);
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
+      }
 
+      await verifyToken(savedToken);
       setLoading(false);
     };
 
     checkAuth();
   }, []);
 
-  // Called from login component
+  useEffect(() => {
+    if (user?.remindersEnabled !== undefined) {
+      setReminder(user.remindersEnabled);
+    }
+    if (user?.reminderIn !== undefined) {
+      setReminderIn(user.reminderIn);
+    }
+  }, [user]);
+
+  const postSetReminderIn = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/user/set-reminder",
+        {
+          email:user.email, reminderIn
+        }
+      );
+
+      if (!res.data.success) {
+        errorToast("Failed to update reminder");
+      }
+    } catch (error) {
+      errorToast("Something went wrong");
+    }
+  };
+  const postSetReminder = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/user/reminder",
+        {
+          email:user.email, isReminder:reminder
+        }
+      );
+
+      if (!res.data.success) {
+        errorToast("Failed to update reminder");
+      }
+    } catch (error) {
+      errorToast("Something went wrong");
+    }
+  };
+
+  // ===============================
+  // Trigger API when reminder changes
+  // ===============================
+  useEffect(() => {
+    if (!loading && user) {
+      postSetReminder();
+    }
+  }, [reminder]);
+  useEffect(() => {
+    if (!loading && user) {
+      postSetReminderIn();
+    }
+  }, [reminderIn]);
+
+  // ===============================
+  // Set auth data after login
+  // ===============================
   const setAuthData = (userData, jwtToken) => {
     setUser(userData);
     setToken(jwtToken);
@@ -65,12 +130,17 @@ export const AuthProvider = ({ children }) => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${jwtToken}`;
   };
 
+  // ===============================
   // Logout
+  // ===============================
   const logout = () => {
     setUser(null);
     setToken(null);
+    setReminder(false);
+
     localStorage.removeItem("protask-user");
     localStorage.removeItem("protask-token");
+
     delete axios.defaults.headers.common["Authorization"];
   };
 
@@ -78,6 +148,10 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
+        reminder,
+        reminderIn,
+        setReminderIn,
+        setReminder,
         token,
         setAuthData,
         logout,

@@ -7,7 +7,8 @@ const {
   deleteAllTask,
   deleteTask,
   getAllTasks,
-  getStat
+  getStat,
+  isReminder
 } = require("../controllers/userController");
 
 userRouter.post("/add-task", addTask);
@@ -17,5 +18,6 @@ userRouter.post("/delete-task", deleteTask);
 userRouter.post("/delete-all-task", deleteAllTask);
 userRouter.post("/get-all-tasks", getAllTasks);
 userRouter.post("/get-stat", getStat);
+userRouter.post("/reminder", isReminder);
 
 module.exports = userRouter;

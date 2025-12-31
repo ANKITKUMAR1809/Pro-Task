@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/user.model");
 const Otp = require("../models/otp.model");
+const { isReminder } = require("./userController");
 
 // Email Transporter
 const transporter = nodemailer.createTransport({
@@ -189,6 +190,8 @@ exports.emailLogin = async (req, res) => {
       user: {
         email: user.email,
         name: user.name,
+        reminderStat:user.remindersEnabled,
+        reminderIn:user.reminderIn
       },
     });
   } catch (error) {

@@ -1,36 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { CircleX, CircleCheckBig, ClockFading } from "lucide-react";
+import React from "react";
+import { CircleX, CircleCheckBig } from "lucide-react";
 import { useTask } from "../context/TaskContext";
 
 const StackTask = () => {
-  const [task, setTask] = useState([]);
   const { incompleteTasks, loading, markCompleted, deleteTask } = useTask();
 
-  useEffect(() => {
-    if (!loading) {
-      setTask(incompleteTasks);
-    }
-  }, [incompleteTasks, loading, deleteTask, markCompleted]);
-
   return (
-    <section className="max-h-screen md:h-1/2 bg-white p-4 shadow-xl m-2 rounded-xl">
-      <h3 className="text-center font-semibold text-2xl mb-3">
+    <section className=" bg-white p-4 shadow-xl m-2 rounded-xl flex flex-col">
+      {/* Header */}
+      <h3 className="text-center font-semibold text-2xl mb-3 shrink-0">
         Incomplete Tasks
       </h3>
 
-      <div className="overflow-y-scroll max-h-[70vh] space-y-3">
-
-        {/* Header */}
-       
-
-        {/* Task List */}
-        {task.length === 0 ? (
-          <p className="text-center text-gray-500 mt-4">No pending tasks 🎉</p>
+      {/* Scrollable Area */}
+      <div className="flex-1 overflow-y-auto space-y-3 pr-1 lg:max-h-70 max-h-full">
+        {loading ? (
+          <p className="text-center text-gray-500 mt-4">Loading...</p>
+        ) : incompleteTasks.length === 0 ? (
+          <p className="text-center text-gray-500 mt-4">
+            No pending tasks 🎉
+          </p>
         ) : (
-          task.map((t) => (
+          incompleteTasks.map((t) => (
             <div
               key={t._id}
-              className="flex justify-between items-center bg-zinc-50 py-3 px-4 rounded-xl border shadow hover:shadow-md transition-all"
+              className="flex justify-between items-center bg-zinc-50 py-3 px-4 rounded-xl border shadow"
             >
               {/* Task Details */}
               <div>
@@ -46,25 +40,21 @@ const StackTask = () => {
                 </span>
               </div>
 
-              {/* Action Buttons */}
+              {/* Actions */}
               <div className="flex flex-col gap-3">
-
-                {/* Mark Completed */}
                 <button
                   onClick={() => markCompleted(t._id)}
-                  className="p-2 bg-green-100 hover:bg-green-200 rounded-full transition"
+                  className="p-2 bg-green-100 hover:bg-green-200 rounded-full"
                 >
                   <CircleCheckBig className="text-green-600" size={22} />
                 </button>
 
-                {/* Delete Task */}
                 <button
                   onClick={() => deleteTask(t._id)}
-                  className="p-2 bg-red-100 hover:bg-red-200 rounded-full transition"
+                  className="p-2 bg-red-100 hover:bg-red-200 rounded-full"
                 >
                   <CircleX className="text-red-600" size={22} />
                 </button>
-
               </div>
             </div>
           ))

@@ -9,5 +9,9 @@ import Intro from './Intro';
 import SettingDashboard from './SettingDashboard';
 import TaskDashboard from './TaskDashboard';
 import StatDashboard from './StatDashboard';
+import ProfileDashboard from './ProfileDashboard';
+import Features from './Features';
+import Contact from './Contact';
+import Pricing from './Pricing';
 
-export { Home, About, Login, Register, VerifyOtpSavePassword, Dashboard, HomeDashboard, Intro, SettingDashboard, TaskDashboard, StatDashboard };
+export { Home, About, Login, Register, VerifyOtpSavePassword, Dashboard, HomeDashboard, Intro, SettingDashboard,ProfileDashboard, TaskDashboard, StatDashboard, Features, Pricing, Contact};

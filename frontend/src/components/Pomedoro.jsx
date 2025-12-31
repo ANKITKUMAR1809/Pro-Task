@@ -107,7 +107,7 @@ const Pomedoro = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg p-6">
+    <div className="max-w-md h-full mx-auto bg-white rounded-xl shadow-lg p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Pomodoro Timer</h2>

@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema(
           type: Date,
           default: Date.now,
         },
+        lastReminded: Date,
       },
     ],
 
@@ -52,21 +53,17 @@ const userSchema = new mongoose.Schema(
 
     remindersEnabled: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     reminderIn: {
       type: String,
       enum: ["2H", "4H", "6H"],
     },
-    aiPlans: [
-      {
-        content: String,
-        createdAt: {
-          type: Date,
-          default: Date.now,
-        },
-      },
-    ],
+    membership: {
+      type: String,
+      enum: ["free", "upgraded"],
+      default:"free"
+    },
   },
   { timestamps: true }
 );

@@ -11,7 +11,11 @@ import {
   Intro,
   SettingDashboard,
   TaskDashboard,
-  StatDashboard
+  StatDashboard,
+  ProfileDashboard,
+  Features,
+  Contact,
+  Pricing
 } from "./pages/index";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // <-- REQUIRED
@@ -30,6 +34,9 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/features" element={<Features />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/pricing" element={<Pricing />} />
             <Route
               path="/verify-otp-save-password/:email"
               element={<VerifyOtpSavePassword />}
@@ -43,6 +50,7 @@ const App = () => {
             <Route path="pomedaro" element={<Pomedoro/>} />
             <Route path="tasks" element={<TaskDashboard/>} />
             <Route path="stats" element={<StatDashboard/>} />
+            <Route path="profile" element={<ProfileDashboard/>} />
           </Route>
 
           <Route path="*" element={<div>404 Not Found</div>} />

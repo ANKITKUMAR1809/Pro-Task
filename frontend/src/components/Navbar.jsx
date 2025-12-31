@@ -39,7 +39,7 @@ const Navbar = () => {
           </Link>
 
           {/* Services Dropdown */}
-          <div 
+          {/* <div 
             className="relative"
             onMouseEnter={() => setServicesOpen(true)}
             onMouseLeave={() => setServicesOpen(false)}
@@ -62,7 +62,7 @@ const Navbar = () => {
                 </Link>
               </div>
             )}
-          </div>
+          </div> */}
 
           <Link 
             to="/pricing" 

@@ -19,7 +19,7 @@ app.use("/api/auth", emailRouter);
 app.use("/api/user", userRouter);
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Pro-Task Backend Running 🚀");
 });
 
 const startServer = async () => {

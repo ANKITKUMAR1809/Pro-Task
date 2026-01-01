@@ -7,11 +7,16 @@ const { isReminder } = require("./userController");
 
 // Email Transporter
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // TLS
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
+    pass: process.env.EMAIL_PASSWORD, // APP PASSWORD
   },
+  connectionTimeout: 20_000,
+  greetingTimeout: 20_000,
+  socketTimeout: 20_000,
 });
 
 // ------------------------------------
@@ -190,8 +195,8 @@ exports.emailLogin = async (req, res) => {
       user: {
         email: user.email,
         name: user.name,
-        reminderStat:user.remindersEnabled,
-        reminderIn:user.reminderIn
+        reminderStat: user.remindersEnabled,
+        reminderIn: user.reminderIn,
       },
     });
   } catch (error) {
@@ -240,7 +245,6 @@ exports.verifyMe = async (req, res) => {
       success: true,
       user,
     });
-
   } catch (error) {
     console.error("Verify Token Error:", error.message);
 

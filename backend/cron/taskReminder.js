@@ -3,11 +3,16 @@ const User = require("../models/user.model");
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // TLS
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
+    pass: process.env.EMAIL_PASSWORD, // APP PASSWORD
   },
+  connectionTimeout: 20_000,
+  greetingTimeout: 20_000,
+  socketTimeout: 20_000,
 });
 
 // Reminder frequency
@@ -54,8 +59,7 @@ cron.schedule("0 * * * *", async () => {
       if (!task.lastReminded) return true;
 
       // 🔁 repeated reminder
-      const sinceLastReminder =
-        now - new Date(task.lastReminded).getTime();
+      const sinceLastReminder = now - new Date(task.lastReminded).getTime();
 
       return sinceLastReminder >= reminderDelay;
     });

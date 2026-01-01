@@ -10,14 +10,25 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Reminder frequency
 const REMINDER_MAP = {
   "2H": 2 * 60 * 60 * 1000,
   "4H": 4 * 60 * 60 * 1000,
   "6H": 6 * 60 * 60 * 1000,
 };
 
-cron.schedule("*/30 * * * *", async () => {
-  console.log("⏰ Cron running");
+// Task expiry
+const TARGET_MAP = {
+  "1D": 1 * 24 * 60 * 60 * 1000,
+  "2D": 2 * 24 * 60 * 60 * 1000,
+  "3D": 3 * 24 * 60 * 60 * 1000,
+  "1W": 7 * 24 * 60 * 60 * 1000,
+  "2W": 14 * 24 * 60 * 60 * 1000,
+};
+
+// 🕐 Runs every 1 hour
+cron.schedule("0 * * * *", async () => {
+  console.log("⏰ Cron running (hourly)");
 
   const now = Date.now();
   const users = await User.find({ remindersEnabled: true });
@@ -29,11 +40,20 @@ cron.schedule("*/30 * * * *", async () => {
     const pendingTasks = user.tasks.filter((task) => {
       if (task.completed) return false;
 
-      const taskAge = now - new Date(task.createdAt).getTime();
+      const createdAt = new Date(task.createdAt).getTime();
+      const taskAge = now - createdAt;
+
+      // ❌ task expired → no reminder
+      const targetDuration = TARGET_MAP[task.target];
+      if (taskAge > targetDuration) return false;
+
+      // ⏳ too early for reminder
       if (taskAge < reminderDelay) return false;
 
+      // ✅ first reminder
       if (!task.lastReminded) return true;
 
+      // 🔁 repeated reminder
       const sinceLastReminder =
         now - new Date(task.lastReminded).getTime();
 
@@ -49,7 +69,7 @@ cron.schedule("*/30 * * * *", async () => {
     const emailHTML = `
       <h2>🔔 Task Reminder</h2>
       <p>Hi ${user.name || "User"},</p>
-      <p>You have <b>${pendingTasks.length}</b> incomplete task(s):</p>
+      <p>You have <b>${pendingTasks.length}</b> pending task(s):</p>
       <ul>${taskList}</ul>
       <p>Complete them to maintain your streak 🚀</p>
       <small>— Pro Task Team</small>
@@ -59,11 +79,11 @@ cron.schedule("*/30 * * * *", async () => {
       await transporter.sendMail({
         from: `"Pro Task 🔔" <${process.env.EMAIL_USER}>`,
         to: user.email,
-        subject: "⏰ You have pending tasks",
+        subject: "⏰ Pending Task Reminder",
         html: emailHTML,
       });
 
-      // ✅ Update lastReminded for each task
+      // update reminder time
       pendingTasks.forEach((task) => {
         task.lastReminded = new Date(now);
       });

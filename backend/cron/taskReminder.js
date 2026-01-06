@@ -15,6 +15,7 @@ const transporter = nodemailer.createTransport({
   socketTimeout: 20_000,
 });
 
+
 // Reminder frequency
 const REMINDER_MAP = {
   "2H": 2 * 60 * 60 * 1000,
